@@ -8,7 +8,7 @@ An opinionated cut down scaffold generator. This uses haml for templates and inc
 
 h2. Install
 
-<pre lang="bash">script/plugin install [insert scaffold link]</pre>
+<pre lang="bash">script/plugin install git://github.com/pyrat/scaffy.git</pre>
 
 h3. Usage
 
@@ -42,5 +42,5 @@ h3. Development
 
 This project can be found on github at the following URL.
 
-[insert github link]
+"Scaffy Scaffold Generator":http://github.com/pyrat/scaffy/tree/master
 
