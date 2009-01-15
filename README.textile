@@ -19,7 +19,7 @@ additional arguments you should see the available generators listed.
 To run the generator, go to your rails project directory and call it
 using the script/generate or script/destroy command.
 
-<pre lang="bash">script/generate scaffy Comment email:string content:text index new</pre>
+<pre lang="bash">script/generate scaffy Comment email:string content:text </pre>
 
 Run the command with the <tt>--help</tt> option to learn more.
 
