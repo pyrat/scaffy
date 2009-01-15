@@ -1,0 +1,46 @@
+!http://scoop.cheerfactory.co.uk/wp-content/uploads/2009/01/scaffy.jpg!
+
+h2. Scaffy Generator
+
+An opinionated cut down scaffold generator. This uses haml for templates and includes tests in vanilla test/unit. Nothing fancy, nothing special. Just a really fast way to use scaffolding without it being rubbish.
+
+!http://scoop.cheerfactory.co.uk/wp-content/uploads/2009/01/scaff.jpg (scaff)!
+
+h2. Install
+
+<pre lang="bash">script/plugin install [insert scaffold link]</pre>
+
+h3. Usage
+
+Once you install the gem, the generators will be available to all Rails
+applications on your system. If you run script/generate without any
+additional arguments you should see the available generators listed.
+
+To run the generator, go to your rails project directory and call it
+using the script/generate or script/destroy command.
+
+<pre lang="bash">script/generate scaffy Comment email:string content:text index new</pre>
+
+Run the command with the <tt>--help</tt> option to learn more.
+
+<pre lang="bash">
+script/generate scaffy --help
+</pre>
+
+h3. Troubleshooting
+
+<b>I get a missing database error.</b>
+
+Run <tt>rake db:migrate</tt>.
+
+<b>Forms don't work.</b>
+
+Try restarting your development server. Sometimes it doesn't detect the
+change in the routing.
+
+h3. Development
+
+This project can be found on github at the following URL.
+
+[insert github link]
+
