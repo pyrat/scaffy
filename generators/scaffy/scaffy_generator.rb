@@ -1,4 +1,4 @@
-class ScaffyGenerator < Rails::Generator::NamedBase
+class ScaffyGenerator < Rails::Generator::Base
   attr_accessor :name, :attributes, :controller_actions
 
   def initialize(runtime_args, runtime_options = {})
