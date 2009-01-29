@@ -55,6 +55,7 @@ class ScaffyGenerator < Rails::Generator::Base
 
       unless options[:skip_controller]
         m.directory "app/controllers"
+        m.directory(File.join('app/controllers', controller_class_path))
         m.template "controller.rb", "app/controllers/#{plural_name}_controller.rb"
 
         m.directory "app/helpers"
