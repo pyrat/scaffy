@@ -108,9 +108,9 @@ class ScaffyGenerator < Rails::Generator::Base
   def singular_name
     names = name.underscore.split("/")
     if names.size > 1
-      names.last
+      names.last.singularize
     else
-      names.first
+      names.first.singularize
     end
   end
 
@@ -237,7 +237,9 @@ module Rails
     module Commands
 
       class Create < Base
-
+        
+        
+        # Generate namespace resources. (namespace name, resource name, options)
         def route_namespace_resources(namespace_name, resource_name, options = {})
           sentinel = 'ActionController::Routing::Routes.draw do |map|'
           sentinel_existing = "map.namespace :#{namespace_name} do |#{namespace_name}|"
@@ -266,7 +268,7 @@ module Rails
         end
 
 
-        def file_contains(regex)
+        def file_contains(relative_destination, regex)
           path = destination_path(relative_destination)
           File.read(path).match(regex) ? true : false
         end
