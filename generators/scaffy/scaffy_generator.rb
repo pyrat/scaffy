@@ -75,6 +75,13 @@ class ScaffyGenerator < Rails::Generator::Base
 
         m.directory "test/functional" + namespace_dir
         
+        # Route resources accordingly.
+        if namespace_dir
+          m.route_namespace_resources(namespace_dir, migration_name)
+        else
+          m.route_resources(migration_name)
+        end
+        
         m.template "tests/#{test_framework}/controller.rb", "test/functional/#{plural_name}_controller_test.rb"
       end
     end
@@ -221,5 +228,42 @@ class ScaffyGenerator < Rails::Generator::Base
 
     USAGE: #{$0} #{spec.name} ModelName [controller_actions and model:attributes] [options]
     EOS
+  end
+end
+
+
+module Rails
+  module Generator
+    module Commands
+ 
+      class Create < Base
+ 
+        def route_namespace_resources(namespace_name, resource_name, options = {})
+          sentinel = 'ActionController::Routing::Routes.draw do |map|'
+          sentinel_existing = "map.namespace :#{namespace_name} do |#{namespace_name}|"
+          
+          resource_name = resource_name.to_sym.inspect
+
+          namespace_start = "map.namespace :#{namespace_name} do |#{namespace_name}| \n"
+          resource_list = "#{resource_name}, #{options.inspect}"
+          namespace_end = "end"
+          
+          # Need a way to work out whether this is the second namespace
+          # Essentially scan the file for the correct namespace sentinel.
+          
+          unless options[:pretend]
+            
+            gsub_file 'config/routes.rb', /(#{Regexp.escape(sentinel_existing)})/mi do |match|
+              "#{match}\n #{namespace_name}.resources #{resource_list}\n"
+            end
+            
+            gsub_file 'config/routes.rb', /(#{Regexp.escape(sentinel)})/mi do |match|
+              "#{match}\n #{namespace_start} #{namespace_name}.resources #{resource_list}\n #{namespace_end}"
+            end
+          end
+        end
+ 
+      end
+    end
   end
 end
