@@ -53,16 +53,16 @@ class ScaffyGenerator < Rails::Generator::Base
         m.template "tests/testunit/model.rb", "test/unit/#{singular_name}_test.rb"
       end
 
-      unless options[:skip_controller] 
+      unless options[:skip_controller]
         m.directory "app/controllers" + namespace_dir
-       
+
         m.template "controller.rb", "app/controllers/#{plural_name}_controller.rb"
 
         m.directory "app/helpers" + namespace_dir
         m.template "helper.rb", "app/helpers/#{plural_name}_helper.rb"
 
         m.directory "app/views/#{plural_name}"
-        
+
         controller_actions.each do |action|
           if File.exist? source_path("views/#{view_language}/#{action}.html.#{view_language}")
             m.template "views/#{view_language}/#{action}.html.#{view_language}", "app/views/#{plural_name}/#{action}.html.#{view_language}"
@@ -74,14 +74,14 @@ class ScaffyGenerator < Rails::Generator::Base
         end
 
         m.directory "test/functional" + namespace_dir
-        
+
         # Route resources accordingly.
         if namespace_dir
           m.route_namespace_resources(namespace_dir, migration_name)
         else
           m.route_resources(migration_name)
         end
-        
+
         m.template "tests/#{test_framework}/controller.rb", "test/functional/#{plural_name}_controller_test.rb"
       end
     end
@@ -117,8 +117,8 @@ class ScaffyGenerator < Rails::Generator::Base
   def plural_name
     name.underscore.pluralize
   end
-  
-  # A way to simply calculcate the 
+
+  # A way to simply calculcate the
   # namespace dir.
   def namespace_dir
     names = plural_name.split("/")
@@ -132,11 +132,11 @@ class ScaffyGenerator < Rails::Generator::Base
   def class_name
     singular_name.camelize
   end
-  
+
   def index_name
     plural_name.gsub("/", "_")
   end
-  
+
   def migration_name
     singular_name.pluralize
   end
@@ -144,7 +144,7 @@ class ScaffyGenerator < Rails::Generator::Base
   def plural_class_name
     plural_name.camelize
   end
- 
+
 
   def controller_methods(dir_name)
     controller_actions.map do |action|
@@ -235,34 +235,43 @@ end
 module Rails
   module Generator
     module Commands
- 
+
       class Create < Base
- 
+
         def route_namespace_resources(namespace_name, resource_name, options = {})
           sentinel = 'ActionController::Routing::Routes.draw do |map|'
           sentinel_existing = "map.namespace :#{namespace_name} do |#{namespace_name}|"
-          
+
           resource_name = resource_name.to_sym.inspect
 
           namespace_start = "map.namespace :#{namespace_name} do |#{namespace_name}| \n"
           resource_list = "#{resource_name}, #{options.inspect}"
           namespace_end = "end"
-          
+
           # Need a way to work out whether this is the second namespace
           # Essentially scan the file for the correct namespace sentinel.
-          
+
           unless options[:pretend]
-            
-            gsub_file 'config/routes.rb', /(#{Regexp.escape(sentinel_existing)})/mi do |match|
-              "#{match}\n #{namespace_name}.resources #{resource_list}\n"
-            end
-            
-            gsub_file 'config/routes.rb', /(#{Regexp.escape(sentinel)})/mi do |match|
-              "#{match}\n #{namespace_start} #{namespace_name}.resources #{resource_list}\n #{namespace_end}"
+
+            if file_contains('config/routes.rb', /(#{Regexp.escape(sentinel_existing)})/mi)
+              gsub_file 'config/routes.rb', /(#{Regexp.escape(sentinel_existing)})/mi do |match|
+                "#{match}\n #{namespace_name}.resources #{resource_list}\n"
+              end
+            else
+              gsub_file 'config/routes.rb', /(#{Regexp.escape(sentinel)})/mi do |match|
+                "#{match}\n #{namespace_start} #{namespace_name}.resources #{resource_list}\n #{namespace_end}"
+              end
             end
           end
         end
- 
+
+
+        def file_contains(regex)
+          path = destination_path(relative_destination)
+          File.read(path).match(regex) ? true : false
+        end
+
+
       end
     end
   end
