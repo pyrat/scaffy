@@ -7,7 +7,7 @@
   def test_create_valid
     <%= class_name %>.any_instance.stubs(:valid?).returns(true)
     post :create
-    assert_redirected_to <%= plural_name %>_url
+    assert_redirected_to <%= index_name %>_url
   end
   
   

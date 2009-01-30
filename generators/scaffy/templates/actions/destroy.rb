@@ -6,5 +6,5 @@
     rescue ApplicationError => msg
       flash[:warning] = msg.to_s
     end
-    redirect_to <%= plural_name %>_url
+    redirect_to <%= index_name %>_url
   end

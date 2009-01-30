@@ -1,3 +1,3 @@
   def index
-    @<%= plural_name %> = <%= class_name %>.find(:all)
+    @<%= index_name %> = <%= class_name %>.find(:all)
   end

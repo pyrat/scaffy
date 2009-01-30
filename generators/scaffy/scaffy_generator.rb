@@ -46,22 +46,23 @@ class ScaffyGenerator < Rails::Generator::Base
         m.directory "app/models"
         m.template "model.rb", "app/models/#{singular_name}.rb"
         unless options[:skip_migration]
-          m.migration_template "migration.rb", "db/migrate", :migration_file_name => "create_#{plural_name}"
+          m.migration_template "migration.rb", "db/migrate", :migration_file_name => "create_#{migration_name}"
         end
 
         m.directory "test/unit"
         m.template "tests/testunit/model.rb", "test/unit/#{singular_name}_test.rb"
       end
 
-      unless options[:skip_controller]
-        m.directory "app/controllers"
-        m.directory(File.join('app/controllers', controller_class_path))
+      unless options[:skip_controller] 
+        m.directory "app/controllers" + namespace_dir
+       
         m.template "controller.rb", "app/controllers/#{plural_name}_controller.rb"
 
-        m.directory "app/helpers"
+        m.directory "app/helpers" + namespace_dir
         m.template "helper.rb", "app/helpers/#{plural_name}_helper.rb"
 
         m.directory "app/views/#{plural_name}"
+        
         controller_actions.each do |action|
           if File.exist? source_path("views/#{view_language}/#{action}.html.#{view_language}")
             m.template "views/#{view_language}/#{action}.html.#{view_language}", "app/views/#{plural_name}/#{action}.html.#{view_language}"
@@ -72,8 +73,8 @@ class ScaffyGenerator < Rails::Generator::Base
           m.template "views/#{view_language}/_form.html.#{view_language}", "app/views/#{plural_name}/_form.html.#{view_language}"
         end
 
-        m.route_resources plural_name
-        m.directory "test/functional"
+        m.directory "test/functional" + namespace_dir
+        
         m.template "tests/#{test_framework}/controller.rb", "test/functional/#{plural_name}_controller_test.rb"
       end
     end
@@ -95,21 +96,48 @@ class ScaffyGenerator < Rails::Generator::Base
     names.all? { |n| action? n.to_s }
   end
 
+  # Some helper methods for name generation used in the generator.
+
   def singular_name
-    name.underscore
+    names = name.underscore.split("/")
+    if names.size > 1
+      names.last
+    else
+      names.first
+    end
   end
 
   def plural_name
     name.underscore.pluralize
   end
+  
+  # A way to simply calculcate the 
+  # namespace dir.
+  def namespace_dir
+    names = plural_name.split("/")
+    if names.size > 1
+      "/" + names.first
+    else
+      ""
+    end
+  end
 
   def class_name
-    name.camelize
+    singular_name.camelize
+  end
+  
+  def index_name
+    plural_name.gsub("/", "_")
+  end
+  
+  def migration_name
+    singular_name.pluralize
   end
 
   def plural_class_name
     plural_name.camelize
   end
+ 
 
   def controller_methods(dir_name)
     controller_actions.map do |action|
