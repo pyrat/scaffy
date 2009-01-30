@@ -108,9 +108,9 @@ class ScaffyGenerator < Rails::Generator::Base
   def singular_name
     names = name.underscore.split("/")
     if names.size > 1
-      names.last.singularize
+      names.last.downcase.singularize
     else
-      names.first.singularize
+      names.first.downcase.singularize
     end
   end
 
@@ -138,7 +138,11 @@ class ScaffyGenerator < Rails::Generator::Base
   end
 
   def migration_name
-    singular_name.pluralize
+    singular_name.downcase.pluralize
+  end
+  
+  def migration_title
+    migration_name.capitalize
   end
 
   def plural_class_name
