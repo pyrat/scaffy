@@ -274,7 +274,7 @@ module Rails
 
         def file_contains(relative_destination, regex)
           path = destination_path(relative_destination)
-          File.read(path).match(regex) ? true : false
+          File.read(path) =~ regex
         end
 
 
