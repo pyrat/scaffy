@@ -2,7 +2,7 @@ require 'test/unit'
 
 # Must set before requiring generator libs.
 TMP_ROOT = File.dirname(__FILE__) + "/tmp" unless defined?(TMP_ROOT)
-PROJECT_NAME = "myproject" unless defined?(PROJECT_NAME)
+PROJECT_NAME = "skoyting" unless defined?(PROJECT_NAME)
 app_root = File.join(TMP_ROOT, PROJECT_NAME)
 if defined?(APP_ROOT)
   APP_ROOT.replace(app_root)
@@ -16,12 +16,13 @@ else
 end
 
 require 'rubygems'
-gem 'rails', '2.0.2' # getting a Rails.configuration error with 2.1
 require 'rubigen'  # gem install rubigen
 require 'rubigen/helpers/generator_test_helper'
-require 'rails_generator'
+
+# require 'rails_generator'
 require 'shoulda' # gem install Shoulda
 require 'mocha'
+require 'redgreen'
 
 module ScaffyGenerators
   module TestHelper
@@ -71,7 +72,7 @@ module ScaffyGenerators
 end
 
 class Thoughtbot::Shoulda::Context
-  include NiftyGenerators::ShouldaAdditions
+  include ScaffyGenerators::ShouldaAdditions
 end
 
 # Mock out what we need from AR::Base.
