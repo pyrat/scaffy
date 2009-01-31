@@ -76,8 +76,8 @@ class ScaffyGenerator < Rails::Generator::Base
         m.directory "test/functional" + namespace_dir
 
         # Route resources accordingly.
-        if namespace_dir
-          m.route_namespace_resources(namespace_dir, migration_name)
+        if namespace_name
+          m.route_namespace_resources(namespace_name, migration_name)
         else
           m.route_resources(migration_name)
         end
@@ -123,9 +123,34 @@ class ScaffyGenerator < Rails::Generator::Base
   def namespace_dir
     names = plural_name.split("/")
     if names.size > 1
-      "/" + names.first
+      "/" + names.first.downcase
     else
       ""
+    end
+  end
+  
+  def namespace_name
+    names = plural_name.split("/")
+    if names.size > 1
+      names.first.downcase
+    else
+      ""
+    end
+  end
+  
+  def url_singular_name
+    unless namespace_name.blank?
+      namespace_name + "_" + singular_name
+    else
+      singular_name
+    end
+  end
+  
+  def url_plural_name
+    unless namespace_name.blank?
+      namespace_name + "_" + migration_name
+    else
+      migration_name
     end
   end
 
@@ -134,7 +159,7 @@ class ScaffyGenerator < Rails::Generator::Base
   end
 
   def index_name
-    plural_name.gsub("/", "_")
+    plural_name.downcase.gsub("/", "_")
   end
 
   def migration_name
