@@ -76,7 +76,7 @@ class ScaffyGenerator < Rails::Generator::Base
         m.directory "test/functional" + namespace_dir
 
         # Route resources accordingly.
-        if namespace_name
+        unless namespace_name.blank?
           m.route_namespace_resources(namespace_name, migration_name)
         else
           m.route_resources(migration_name)
