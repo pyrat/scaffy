@@ -18,7 +18,7 @@
           \|
           = link_to 'Edit', edit_<%= url_singular_name %>_path(<%= singular_name %>)
           \|
-          = link_to 'Destroy', <%= url_singular_name %>_path(@<%= singular_name %>), :confirm => 'Are you sure?', :method => :delete
+          = link_to 'Destroy', <%= url_singular_name %>_path(<%= singular_name %>), :confirm => 'Are you sure?', :method => :delete
 
 %p= link_to "New <%= singular_name.titleize %>", new_<%= url_singular_name %>_path
 
