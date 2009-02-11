@@ -2,6 +2,11 @@ require 'test/unit'
 
 # Must set before requiring generator libs.
 TMP_ROOT = File.dirname(__FILE__) + "/tmp" unless defined?(TMP_ROOT)
+require 'rubygems'
+require 'rubigen'  # gem install rubigen
+require 'rails_generator'
+require 'rubigen/helpers/generator_test_helper'
+
 PROJECT_NAME = "skoyting" unless defined?(PROJECT_NAME)
 app_root = File.join(TMP_ROOT, PROJECT_NAME)
 if defined?(APP_ROOT)
@@ -14,10 +19,6 @@ if defined?(RAILS_ROOT)
 else
   RAILS_ROOT = app_root
 end
-
-require 'rubygems'
-require 'rubigen'  # gem install rubigen
-require 'rubigen/helpers/generator_test_helper'
 
 # require 'rails_generator'
 require 'shoulda' # gem install Shoulda
