@@ -1,10 +1,10 @@
-!http://scoop.cheerfactory.co.uk/wp-content/uploads/2009/01/scaffy.jpg!
+!http://scoop.simplyexcited.co.uk/wp-content/uploads/2009/01/scaffy.jpg!
 
 h2. Scaffy Generator
 
 An opinionated cut down scaffold generator. This uses haml for templates and includes tests in vanilla test/unit. Nothing fancy, nothing special. Just a really fast way to use scaffolding without it being rubbish.
 
-!http://scoop.cheerfactory.co.uk/wp-content/uploads/2009/01/scaff.jpg (scaff)!
+!http://scoop.simplyexcited.co.uk/wp-content/uploads/2009/01/scaff.jpg (scaff)!
 
 h2. Install
 
