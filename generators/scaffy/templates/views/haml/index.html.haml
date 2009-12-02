@@ -8,7 +8,7 @@
       <%- end -%>
       %th Actions
   %tbody
-    - for <%= singular_name %> in @<%= plural_name %>
+    - for <%= singular_name %> in @<%= migration_name %>
       %tr
         <%- for attribute in attributes -%>
         %td= h <%= singular_name %>.<%= attribute.name %>

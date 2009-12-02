@@ -167,7 +167,7 @@ class ScaffyGenerator < Rails::Generator::Base
   end
   
   def migration_title
-    migration_name.capitalize
+    singular_name.camelize.pluralize
   end
 
   def plural_class_name

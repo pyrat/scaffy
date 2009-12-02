@@ -1,4 +1,8 @@
+<% unless namespace_name.blank? %>
+- form_for [:<%= namespace_name%>, @<%= singular_name %>] do |f|
+<% else %>
 - form_for @<%= singular_name %> do |f|
+<% end %>
   = f.error_messages
   <%- for attribute in attributes -%>
   %p
