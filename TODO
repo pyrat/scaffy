@@ -1,1 +1,1 @@
-* support namespaces
+* testing with factory girl in incomplete due to it not autoloading the factories.

@@ -1,0 +1,16 @@
+<% unless namespace.blank? %>
+= form_for [:<%= namespace.downcase %>, @<%= singular_name %>] do |f|
+<% else %>
+= form_for @<%= object_singular %> do |f|
+<% end %>
+  = f.error_messages
+  <% attributes.each do |attribute| %>
+  %p
+    = f.label :<%= attribute.name %>
+    %br
+    = f.<%= attribute.field_type %> :<%= attribute.name %>
+  <% end %>
+  %p
+    = f.submit "Save"
+    or
+    = link_to "Cancel", <%= index_url %>

@@ -1,3 +1,7 @@
 0.1.0 (December 7th, 2008)
 
 * initial release (copied initial structure and generator format from http://github.com/ryanb/nifty-generators/)
+
+0.2.0 (Thursday 30th September 2010)
+
+* Upgrading the plugin for rails 3. Still in development.

@@ -1,0 +1,24 @@
+%h1 <%= human_name %>
+
+%table
+  %thead
+    %tr
+      <%- for attribute in attributes -%>
+      %th <%= attribute.human_name %>
+      <%- end -%>
+      %th Actions
+  %tbody
+    - for <%= object_singular %> in @<%= object_plural %>
+      %tr
+        <%- for attribute in attributes -%>
+        %td= <%= object_singular %>.<%= attribute.name %>
+        <%- end %>
+        %td
+          = link_to 'Show', <%= show_url %>
+          \|
+          = link_to 'Edit', <%= edit_url %>
+          \|
+          = link_to 'Destroy', <%= show_url %>, :confirm => 'Are you sure?', :method => :delete
+
+%p= link_to "New <%= object_singular.titleize %>", <%= new_url %>
+

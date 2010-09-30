@@ -1,0 +1,13 @@
+= link_to "< back to list", <%= index_url %>
+
+%h1 View <%= human_name %>
+
+<%- for attribute in attributes -%>
+%p
+  %strong <%= attribute.human_name.titleize %>:
+  = @<%= object_singular %>.<%= attribute.name %>
+<%- end -%>
+
+%p
+  = link_to "Edit", <%= edit_url %>
+  = link_to "Delete", <%= show_url %>, :method => :delete, :confirm => "Are you sure?"
