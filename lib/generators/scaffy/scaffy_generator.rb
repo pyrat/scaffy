@@ -28,7 +28,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
   end
 
   def add_routes
-    if options[:namespace].present?
+    if namespace.present?
       # add namespace route
       route "namespace :#{namespace.downcase} do \n resources :#{object_plural} \nend"
     else
@@ -102,7 +102,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
   end
 
   def controller_name
-    namespace_prefix + name.capitalize.pluralize + 'Controller'
+    namespace_prefix + name.capitalize.pluralize
   end
 
   def namespace_prefix
@@ -151,7 +151,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
 
   def show_url(options = {})
     val = options[:instance] ? "@" : ''
-    if options[:namespace].present?
+    if namespace.present?
       "[:#{namespace.downcase}, #{val}#{object_singular}]"
     else
       val + object_singular

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class <%= human_name %>ControllerTest < ActionController::TestCase
+class <%= controller_name %>ControllerTest < ActionController::TestCase
   
   context "testing controller" do
     

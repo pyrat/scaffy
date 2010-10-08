@@ -1,4 +1,4 @@
-class <%= controller_name %> < ApplicationController
+class <%= controller_name %>Controller < ApplicationController
   
   def index
     @<%= object_plural %> = <%= class_name %>.all
