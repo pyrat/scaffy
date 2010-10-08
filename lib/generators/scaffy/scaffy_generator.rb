@@ -10,6 +10,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
   # make it a class option
   argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
   class_option :namespace, :type => :string, :default => '', :desc => "Specify a namespace"
+  class_option :layout, :type => :string, :desc => "Generate a layout and styles"
 
 
   def render_controller
@@ -49,6 +50,23 @@ class ScaffyGenerator < Rails::Generators::NamedBase
     template "test/factory_girl/factory.rb", "test/factories/#{object_singular}.rb"
     template "test/shoulda/model_test.rb", "test/unit/#{object_singular}.rb"
     template "test/shoulda/controller_test.rb", "test/functional" +  namespace_directory +  "/#{object_plural}_controller_test.rb"
+  end
+  
+  def render_layout
+    if options[:layout]
+      copy_file "views/haml/layout.html.haml" "app/views/layout/application.html.haml"
+      copy_file "assets/scaffy.css", "public/stylesheets/scaffy.css"
+    end
+  end
+  
+  def render_helper_methods
+    
+  end
+  
+  def add_gems
+    gem 'haml'
+    gem 'shoulda', :env => :test
+    gem 'factory_girl_rails', :env => :test
   end
 
   protected
@@ -114,28 +132,30 @@ class ScaffyGenerator < Rails::Generators::NamedBase
     object_plural + '_controller'
   end
 
-  def show_url
+  def show_url(options = {})
+    val = options[:instance] ? "@" : ''
     if options[:namespace].present?
-      "[:#{namespace.downcase}, #{object_singular}]"
+      "[:#{namespace.downcase}, #{val}#{object_singular}]"
     else
-      object_singular
+      val + object_singular
     end
   end
 
 
   def new_url
     if namespace.present?
-      "polymorphic_url([:#{namespace.downcase}, #{object_singular}], :action => :new)"
+      "polymorphic_url([:#{namespace.downcase}, #{class_name}.new], :action => :new)"
     else
-      "polymorphic_url(#{object_singular}, :action => :new)"
+      "polymorphic_url(#{class_name}.new, :action => :new)"
     end
   end
 
-  def edit_url
+  def edit_url(options = {})
+    val = options[:instance] ? "@" : ''
     if namespace.present?
-      "polymorphic_url([:#{namespace.downcase}, #{object_singular}], :action => :edit)"
+      "polymorphic_url([:#{namespace.downcase}, #{val}#{object_singular}], :action => :edit)"
     else
-      "polymorphic_url(#{object_singular}, :action => :edit)"
+      "polymorphic_url(#{val}#{object_singular}, :action => :edit)"
     end
   end
 

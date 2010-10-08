@@ -9,5 +9,5 @@
 <%- end -%>
 
 %p
-  = link_to "Edit", <%= edit_url %>
-  = link_to "Delete", <%= show_url %>, :method => :delete, :confirm => "Are you sure?"
+  = link_to "Edit", <%= edit_url(:instance => true) %>
+  = link_to "Delete", <%= show_url(:instance => true) %>, :method => :delete, :confirm => "Are you sure?"

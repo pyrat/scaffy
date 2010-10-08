@@ -1,7 +1,12 @@
 !!!
 %html
   %head
-    %title Generated Layout
+    %title Scaffy Scaffolding
+    = stylesheet_link_tag 'scaffy'
+    = javascript_include_tag :defaults
+    = csrf_meta_tag
     
   %body
-    = yield :layout
+    .content
+      = flash_div [:message, :warning]
+      = yield
