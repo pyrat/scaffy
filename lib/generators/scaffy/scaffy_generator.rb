@@ -30,7 +30,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
   def add_routes
     if options[:namespace].present?
       # add namespace route
-      route "namespace :#{namespace.downcase} {resources :#{object_plural}}"
+      route "namespace :#{namespace.downcase} do \n resources :#{object_plural} \nend"
     else
       # add standard route
       route "resources :#{object_plural}"
@@ -139,7 +139,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
 
   def namespace_url_prefix
     if namespace.present?
-      namespace.downcase + "/"
+      namespace.downcase + "_"
     else
       ''
     end
