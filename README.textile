@@ -12,8 +12,35 @@ h2. Install
 
 h3. Usage
 
+Simple scaffold
+
+<pre>
+rails g scaffy post title:string content:text
+</pre>
+
+Scaffold with added layout and flash messages.
+
+<pre>
+rails g scaffy post title:string content:text --layout=true
+</pre>
+
+Scaffold with namespace
+
+<pre>
+rails g car make:string model:string year:integer --namespace=admin
+</pre>
+
+Then to install the dependent gems:
+
+<pre>
+  bundle install
+</pre>
+
+h3. Dependencies
+
+h3. Credits
+
+flutie
 
 
-
-"Scaffy Scaffold Generator":http://github.com/pyrat/scaffy/tree/master
 
