@@ -54,13 +54,30 @@ class ScaffyGenerator < Rails::Generators::NamedBase
   
   def render_layout
     if options[:layout]
-      copy_file "views/haml/layout.html.haml" "app/views/layout/application.html.haml"
-      copy_file "assets/scaffy.css", "public/stylesheets/scaffy.css"
+      copy_file "views/haml/layout.html.haml", "app/views/layouts/application.html.haml"
+      copy_file "assets/stylesheets/scaffy.css", "public/stylesheets/scaffy.css"
+      copy_file "assets/images/alertbad_icon.gif", "public/images/scaffy/alertbad_icon.gif"
+      copy_file "assets/images/alertgood_icon.gif", "public/images/scaffy/alertgood_icon.gif"
+      copy_file "assets/images/glossy-error-icon.jpg", "public/images/scaffy/glossy-error-icon.gif"
+      
+      inject_into_module "app/helpers/application_helper.rb", ApplicationHelper do
+        %(
+        # Returns a div for each key passed if there's a flash
+        # with that key
+        def flash_div *keys
+          divs = keys.select { |k| flash[k] }.collect do |k|
+            content_tag :div, flash[k], :class => "flash " + k.to_s
+          end
+          divs.join.html_safe
+        end
+        )
+      end
+      
     end
   end
   
-  def render_helper_methods
-    
+  def remove_index
+    remove_file "public/index.html"
   end
   
   def add_gems
@@ -161,6 +178,12 @@ class ScaffyGenerator < Rails::Generators::NamedBase
 
   def human_name
     name.capitalize.pluralize
+  end
+  
+  def inject_into_module(path, mod, *args, &block)
+    config = args.last.is_a?(Hash) ? args.pop : {}
+    config.merge!(:after => /module #{mod}\n|module #{mod} .*\n/)
+    inject_into_file(path, *(args << config), &block)
   end
 
 

@@ -3,14 +3,14 @@
 <% else %>
 = form_for @<%= object_singular %> do |f|
 <% end %>
-  = f.error_messages
-  <% attributes.each do |attribute| %>
-  %p
-    = f.label :<%= attribute.name %>
-    %br
-    = f.<%= attribute.field_type %> :<%= attribute.name %>
-  <% end %>
-  %p
-    = f.submit "Save"
-    or
-    = link_to "Cancel", <%= index_url %>
+  %fieldset
+    = f.error_messages
+    <% attributes.each do |attribute| %>
+    %p
+      = f.label :<%= attribute.name %>
+      = f.<%= attribute.field_type %> :<%= attribute.name %>
+    <% end %>
+    %p
+      = f.submit "Save"
+      or
+      = link_to "Cancel", <%= index_url %>
