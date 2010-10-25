@@ -48,7 +48,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
   def render_tests
     # need to create factories directory if it doesnt exist?
     template "test/factory_girl/factory.rb", "test/factories/#{object_singular}.rb"
-    template "test/shoulda/model_test.rb", "test/unit/#{object_singular}.rb"
+    template "test/shoulda/model_test.rb", "test/unit/#{object_singular}_test.rb"
     template "test/shoulda/controller_test.rb", "test/functional" +  namespace_directory +  "/#{object_plural}_controller_test.rb"
   end
   
