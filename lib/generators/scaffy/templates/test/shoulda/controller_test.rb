@@ -21,7 +21,7 @@ class <%= controller_name %>ControllerTest < ActionController::TestCase
     end
     
     should "create successfully" do
-      post :create, Factory.attributes_for(:<%= object_singular %>)
+      post :create, :<%= object_singular %> => Factory.attributes_for(:<%= object_singular %>)
       assert_response :redirect, @response.body
       assert_redirected_to <%= index_url %>
     end
