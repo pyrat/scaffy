@@ -53,7 +53,7 @@ class ScaffyGenerator < Rails::Generators::NamedBase
   end
   
   def render_layout
-    if options[:layout]
+    if options[:layout] == 'true'
       copy_file "views/haml/layout.html.haml", "app/views/layouts/application.html.haml"
       copy_file "assets/stylesheets/scaffy.css", "public/stylesheets/scaffy.css"
       copy_file "assets/images/alertbad_icon.gif", "public/images/scaffy/alertbad_icon.gif"
