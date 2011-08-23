@@ -4,11 +4,14 @@ h2. Scaffy Generator
 
 An opinionated cut down scaffold generator. This uses haml for templates and includes tests in shoulda with factory_girl as the object factory. Nothing fancy, nothing special. Just a really fast way to use scaffolding in an extendable manner.
 
-!http://scoop.simplyexcited.co.uk/wp-content/uploads/2009/01/scaff.jpg (scaff)!
 
 h2. Install
 
-<pre lang="bash">rails plugin install git://github.com/pyrat/scaffy.git</pre>
+Rails 3 (in your Gemfile)
+<pre lang="bash">
+  gem 'scaffy'
+  bundle install
+  </pre>
 
 h3. Usage
 
